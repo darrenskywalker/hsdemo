@@ -9,13 +9,14 @@ import java.util.Set;
 
 @Data
 @Entity
+@Table(name = "club")
 @NoArgsConstructor
 public class ClubEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @ManyToMany(mappedBy = "clubs")

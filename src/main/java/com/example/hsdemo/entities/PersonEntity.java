@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 @Data
 @Entity
+@Table(name = "person")
 @NoArgsConstructor
 public class PersonEntity {
     @Id
@@ -42,7 +43,7 @@ public class PersonEntity {
         this.lastName = personView.getLastName();
 
         this.personalInfo = new PersonalInfoEntity(personView.getPersonalInfo());
-        this.addresses = convertAddresses(personView.getAddress());
+        this.addresses = convertAddresses(personView.getAddresses());
         this.clubs = convertClubs(personView.getClubs());
     }
 

@@ -2,10 +2,12 @@ package com.example.hsdemo.views.person;
 
 import com.example.hsdemo.entities.AddressEntity;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @Data
 @NonNull
+@NoArgsConstructor
 public class AddressView {
     private String street;
     private String city;

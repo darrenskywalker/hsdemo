@@ -4,18 +4,21 @@ import com.example.hsdemo.entities.AddressEntity;
 import com.example.hsdemo.entities.ClubEntity;
 import com.example.hsdemo.entities.PersonEntity;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import java.io.Serializable;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
 @NonNull
+@NoArgsConstructor
 public class PersonView {
     private String firstName;
     private String lastName;
     private PersonalInfoView personalInfo;
-    private Set<AddressView> address;
+    private Set<AddressView> addresses;
     private Set<ClubView> clubs;
 
     public PersonView(final PersonEntity personEntity) {
@@ -23,7 +26,7 @@ public class PersonView {
         this.lastName = personEntity.getLastName();
 
         this.personalInfo = new PersonalInfoView(personEntity.getPersonalInfo());
-        this.address = convertAddresses(personEntity.getAddresses());
+        this.addresses = convertAddresses(personEntity.getAddresses());
         this.clubs = convertClubs(personEntity.getClubs());
     }
 
