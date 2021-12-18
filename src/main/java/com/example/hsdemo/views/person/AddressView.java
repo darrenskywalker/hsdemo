@@ -3,15 +3,19 @@ package com.example.hsdemo.views.person;
 import com.example.hsdemo.entities.AddressEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
+
+import javax.validation.constraints.NotNull;
 
 @Data
-@NonNull
 @NoArgsConstructor
 public class AddressView {
+    @NotNull
     private String street;
+    @NotNull
     private String city;
+    @NotNull
     private String state;
+    @NotNull
     private String zipcode;
 
     public AddressView(final AddressEntity addressEntity) {

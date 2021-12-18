@@ -3,13 +3,15 @@ package com.example.hsdemo.views.person;
 import com.example.hsdemo.entities.PersonalInfoEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
+
+import javax.validation.constraints.NotNull;
 
 @Data
-@NonNull
 @NoArgsConstructor
 public class PersonalInfoView {
+    @NotNull
     private String email;
+    @NotNull
     private String mobile;
 
     public PersonalInfoView(final PersonalInfoEntity personalInfoEntity) {

@@ -5,20 +5,25 @@ import com.example.hsdemo.entities.ClubEntity;
 import com.example.hsdemo.entities.PersonEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
-import java.io.Serializable;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
-@NonNull
 @NoArgsConstructor
 public class PersonView {
+    @NotBlank
     private String firstName;
+    @NotBlank
     private String lastName;
+    @Valid
     private PersonalInfoView personalInfo;
+    @Valid
     private Set<AddressView> addresses;
+    @Valid
     private Set<ClubView> clubs;
 
     public PersonView(final PersonEntity personEntity) {
