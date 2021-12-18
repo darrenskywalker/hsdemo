@@ -27,9 +27,4 @@ public class PersonController {
     public boolean deletePerson(@PathVariable("personid") final long personId) {
         return personService.deletePerson(personId);
     }
-
-    @GetMapping(path = "test", produces = MediaType.APPLICATION_JSON_VALUE)
-    public boolean tester() {
-        return true;
-    }
 }
