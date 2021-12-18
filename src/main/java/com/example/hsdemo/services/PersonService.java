@@ -1,13 +1,17 @@
 package com.example.hsdemo.services;
 
 import com.example.hsdemo.entities.PersonEntity;
+import com.example.hsdemo.exceptions.ResourceNotFoundException;
 import com.example.hsdemo.repositories.ClubRepository;
 import com.example.hsdemo.repositories.PersonRepository;
 import com.example.hsdemo.views.person.PersonView;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,17 +31,20 @@ public class PersonService {
     }
 
     public PersonView getPerson(final Long personId) {
-        var personEntity = personRepository.getById(personId);
-        return new PersonView(personEntity);
+        try {
+            var personEntity = personRepository.getById(personId);
+            return new PersonView(personEntity);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Resource Not Found");
+        }
     }
 
-    public boolean deletePerson(final Long personId) {
+    public void deletePerson(final Long personId) {
         try {
             personRepository.deleteById(personId);
-        } catch (Exception e) {
-            return false;
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException("Resource Not Found");
         }
-        return true;
     }
 
 }
