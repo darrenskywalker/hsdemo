@@ -1,7 +1,6 @@
 package com.example.hsdemo.entities;
 
 import com.example.hsdemo.views.person.AddressView;
-import com.example.hsdemo.views.person.ClubView;
 import com.example.hsdemo.views.person.PersonView;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -59,8 +58,8 @@ public class PersonEntity {
     private Set<ClubEntity> transformClubs(final PersonView personView, final Set<ClubEntity> clubEntities) {
         Set<String> clubEntityNames = clubEntities.stream().filter(Objects::nonNull).map(ClubEntity::getName).collect(Collectors.toSet());
         return personView.getClubs().stream()
-                                    .filter(clubView -> !clubEntityNames.contains(clubView.getName()))
-                                    .map(ClubEntity::new)
-                                    .collect(Collectors.toSet());
+                .filter(clubView -> !clubEntityNames.contains(clubView.getName()))
+                .map(ClubEntity::new)
+                .collect(Collectors.toSet());
     }
 }

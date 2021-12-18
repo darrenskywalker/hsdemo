@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,9 +21,10 @@ public class PersonService {
 
     @Transactional
     public PersonView createPerson(final PersonView personView) {
-        var clubs = personView.getClubs()
-                                            .stream()
-                                            .map(clubView -> clubRepository.findClubEntityByName(clubView.getName())).collect(Collectors.toSet());
+        var clubs =
+                personView.getClubs().stream()
+                        .map(clubView -> clubRepository.findClubEntityByName(clubView.getName()))
+                        .collect(Collectors.toSet());
 
         var person = personRepository.save(new PersonEntity(personView, clubs));
         return new PersonView(person);
