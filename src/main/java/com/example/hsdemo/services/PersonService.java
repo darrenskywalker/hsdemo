@@ -8,7 +8,6 @@ import com.example.hsdemo.views.person.PersonView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.stream.Collectors;
@@ -19,7 +18,6 @@ public class PersonService {
     private final PersonRepository personRepository;
     private final ClubRepository clubRepository;
 
-    @Transactional
     public PersonView createPerson(final PersonView personView) {
         var clubs =
                 personView.getClubs().stream()
