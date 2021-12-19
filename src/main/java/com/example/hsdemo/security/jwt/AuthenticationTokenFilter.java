@@ -1,13 +1,12 @@
 package com.example.hsdemo.security.jwt;
 
 import com.example.hsdemo.security.jwt.services.JwtUtils;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -19,10 +18,9 @@ import java.io.IOException;
 import java.util.Arrays;
 
 @Slf4j
-@RequiredArgsConstructor
-@Component
 public class AuthenticationTokenFilter extends OncePerRequestFilter {
-    private final JwtUtils jwtUtils;
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -31,9 +29,11 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
             var jwt = parseJwt(request);
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
                 var authentication = new UsernamePasswordAuthenticationToken(
-                        null, null, Arrays.asList(new SimpleGrantedAuthority("ROLE_PUBLIC")));
+                        "JWT", null, Arrays.asList(new SimpleGrantedAuthority("ROLE_JWT")));
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+            } else {
+                SecurityContextHolder.clearContext();
             }
         } catch (Exception e) {
             log.error("Unable to do User authentication", e);

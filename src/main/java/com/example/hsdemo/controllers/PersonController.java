@@ -7,6 +7,7 @@ import com.example.hsdemo.views.person.PersonView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -21,11 +22,13 @@ public class PersonController {
     private final PersonService personService;
     private final JwtUtils jwtUtils;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(path = "post-person", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public PersonView createPerson(@Valid @RequestBody final PersonView personView) {
         return personService.createPerson(personView);
     }
 
+    @PreAuthorize("hasRole('JWT') or hasRole('ADMIN')")
     @GetMapping(path = "get-person/{personid}", produces = MediaType.APPLICATION_JSON_VALUE)
     public PersonView getPerson(@PathVariable("personid") final long personId, final HttpServletResponse response) {
         try {
@@ -36,6 +39,7 @@ public class PersonController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(path = "delete-person/{personid}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void deletePerson(@PathVariable("personid") final long personId, final HttpServletResponse response) {
         try {
@@ -46,6 +50,7 @@ public class PersonController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(path = "get-public-user-token", produces = MediaType.APPLICATION_JSON_VALUE)
     public String createJwtToken() {
         return jwtUtils.generateJwtToken();

@@ -1,11 +1,10 @@
 package com.example.hsdemo.security;
 
 import com.example.hsdemo.security.jwt.AuthenticationTokenFilter;
-import com.example.hsdemo.security.jwt.services.JwtUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -13,13 +12,15 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    public AuthenticationTokenFilter authenticationTokenFilter;
+    @Bean
+    public AuthenticationTokenFilter authenticationTokenFilter() {
+        return new AuthenticationTokenFilter();
+    };
 
     @Override
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
@@ -27,17 +28,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationManagerBuilder.inMemoryAuthentication()
                 .withUser("admin")
                 .password(encoder.encode("admin"))
-                .roles("ADMIN");
+                .authorities("ROLE_ADMIN");
     }
 
     @Override
     protected void configure(final HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable()
+        httpSecurity.cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().anyRequest().authenticated().and()
-                .httpBasic().and().addFilterBefore(authenticationTokenFilter, BasicAuthenticationFilter.class);
+                .httpBasic();
         httpSecurity.headers().frameOptions().disable();
 
-        //httpSecurity.addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }
