@@ -1,16 +1,16 @@
 package com.example.hsdemo.entities;
 
 import com.example.hsdemo.views.person.ClubView;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Set;
 
-@Data
 @Entity
 @Table(name = "club")
 @NoArgsConstructor
+@Getter
 public class ClubEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

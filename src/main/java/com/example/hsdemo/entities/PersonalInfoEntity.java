@@ -1,15 +1,15 @@
 package com.example.hsdemo.entities;
 
 import com.example.hsdemo.views.person.PersonalInfoView;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
 @Entity
 @Table(name = "personal_info")
 @NoArgsConstructor
+@Getter
 public class PersonalInfoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

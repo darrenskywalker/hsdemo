@@ -2,8 +2,8 @@ package com.example.hsdemo.entities;
 
 import com.example.hsdemo.views.person.AddressView;
 import com.example.hsdemo.views.person.PersonView;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -11,10 +11,10 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Data
 @Entity
 @Table(name = "person")
 @NoArgsConstructor
+@Getter
 public class PersonEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
