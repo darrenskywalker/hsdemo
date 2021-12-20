@@ -37,7 +37,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-public class PersonControllerTest {
+class PersonControllerTest {
     private MockMvc mockMvc;
     private JwtUtils jwtUtils = mock(JwtUtils.class);
     private Set<ClubEntity> testClubs;

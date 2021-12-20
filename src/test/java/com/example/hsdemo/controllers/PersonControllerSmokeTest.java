@@ -11,12 +11,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.DEFINED_PORT;
 
 @SpringBootTest(webEnvironment = DEFINED_PORT, classes = SpringConfig.class)
-public class PersonControllerSmokeTest {
+class PersonControllerSmokeTest {
     @Autowired
     private TestRestTemplate testRestTemplate;
 
     @Test
-    public void testSmokeTestController() {
+    void testSmokeTestController() {
         ResponseEntity<String> responseEntity = testRestTemplate.withBasicAuth("admin", "admin").getForEntity(
                 "http://localhost:8080/v1/get-public-user-token", String.class);
         assertTrue(responseEntity.getStatusCode().is2xxSuccessful());

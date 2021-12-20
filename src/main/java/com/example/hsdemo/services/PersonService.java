@@ -23,7 +23,7 @@ public class PersonService {
         var clubs =
                 personView.getClubs().stream()
                         .map(clubView -> clubRepository.findClubEntityByName(clubView.getName()))
-                        .filter(clubEntity -> Objects.nonNull(clubEntity))
+                        .filter(Objects::nonNull)
                         .collect(Collectors.toSet());
 
         var person = personRepository.save(new PersonEntity(personView, clubs));
