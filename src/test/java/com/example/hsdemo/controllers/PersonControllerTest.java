@@ -79,7 +79,6 @@ class PersonControllerTest {
         testPersonView.setPersonalInfo(personalInfo);
         testPersonView.setAddresses(new HashSet<>(Arrays.asList(address)));
         testPersonEntity = new PersonEntity(testPersonView, testClubs);
-        testPersonEntity.setId(1L);
     }
 
     @Test
