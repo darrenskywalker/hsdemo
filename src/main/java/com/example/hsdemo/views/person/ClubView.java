@@ -5,14 +5,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
-public class ClubView {
+public class ClubView implements Serializable {
     @NotNull
     private String name;
 
-    ClubView(final ClubEntity clubEntity) {
+    public ClubView(final ClubEntity clubEntity) {
         this.name = clubEntity.getName();
     }
 }

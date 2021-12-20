@@ -5,10 +5,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
-public class PersonalInfoView {
+public class PersonalInfoView implements Serializable {
     @NotNull
     private String email;
     @NotNull

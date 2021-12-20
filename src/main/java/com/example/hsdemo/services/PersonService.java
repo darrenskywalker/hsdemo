@@ -10,6 +10,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +23,7 @@ public class PersonService {
         var clubs =
                 personView.getClubs().stream()
                         .map(clubView -> clubRepository.findClubEntityByName(clubView.getName()))
+                        .filter(clubEntity -> Objects.nonNull(clubEntity))
                         .collect(Collectors.toSet());
 
         var person = personRepository.save(new PersonEntity(personView, clubs));

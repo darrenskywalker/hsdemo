@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -48,14 +49,15 @@ public class PersonEntity {
 
         this.personalInfo = new PersonalInfoEntity(personView.getPersonalInfo());
         this.addresses = convertAddresses(personView.getAddresses());
-        this.clubs = transformClubs(personView, clubEntities);
+        this.clubs = filterNewClubs(personView, clubEntities);
+        this.clubs.addAll(clubEntities);
     }
 
     private Set<AddressEntity> convertAddresses(final Set<AddressView> addresses) {
         return addresses.stream().map(AddressEntity::new).collect(Collectors.toSet());
     }
 
-    private Set<ClubEntity> transformClubs(final PersonView personView, final Set<ClubEntity> clubEntities) {
+    private Set<ClubEntity> filterNewClubs(final PersonView personView, final Set<ClubEntity> clubEntities) {
         Set<String> clubEntityNames = clubEntities.stream().filter(Objects::nonNull).map(ClubEntity::getName).collect(Collectors.toSet());
         return personView.getClubs().stream()
                 .filter(clubView -> !clubEntityNames.contains(clubView.getName()))

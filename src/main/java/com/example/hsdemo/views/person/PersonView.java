@@ -8,12 +8,13 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
-public class PersonView {
+public class PersonView implements Serializable {
     @NotBlank
     private String firstName;
     @NotBlank
